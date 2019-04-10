@@ -121,7 +121,6 @@ body {
   }
 
   .task {
-      width: 25%;
       min-width: 480px;
       display: block;
       margin-left: auto;
