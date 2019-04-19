@@ -21,6 +21,49 @@
             <li>Have lunch</li>
         </ul>
     </div>
+     
+  <button onclick="speech ()">Слушать</button>
+  <button onclick="talk ()">Проговорить</button>
+  <button onclick="stop ()">Остановить</button>
+
+  <script>
+  // Создаем распознаватель
+  var recognizer = new webkitSpeechRecognition();
+
+  // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
+  recognizer.interimResults = true;
+
+  // Какой язык будем распознавать?
+  recognizer.lang = 'ru-Ru';
+
+  // Используем колбек для обработки результатов
+  recognizer.onresult = function (event) {
+    var result = event.results[event.resultIndex];
+    if (result.isFinal) {
+      alert('Вы сказали: ' + result[0].transcript);
+    } else {
+      console.log('Промежуточный результат: ', result[0].transcript);
+    }
+  };
+
+  function speech () {
+    // Начинаем слушать микрофон и распознавать голос
+    recognizer.start();
+  }
+
+  var synth = window.speechSynthesis;
+  
+  var utterance = new SpeechSynthesisUtterance('Ты — один из выживших счастливчиков, живущий в городе-крепости, названной Новой Надеждой. Ты работал над системой раннего оповещения для городской защиты, когда в твою дверь постучали. Это были двое членов городского совета и выглядели они крайне взволнованными. Они рассказали тебе, что радио только что уловило сообщение из укрепленного нефтеперегонного завода возле Сан-Англо на юге. Тамошние жители хотят обменять 10,000 литров горючего на зерно и семена, чтобы улучшить свое производство продовольствия. Совет согласился на этот обмен и сейчас подыскивает кого-нибудь, кто отправился бы в Сан-Англо доставить туда мешки и пригнать назад в Новую Надежду бензовоз с горючим. Это будет длинное и опасное путешествие через страну, лишенную закона.');
+
+  function talk () {
+    synth.speak (utterance);
+  }
+
+  function stop () {
+    synth.pause();
+  }
+  </script>
+     
     <script src="script.js"></script>
     </body>
 </html>
